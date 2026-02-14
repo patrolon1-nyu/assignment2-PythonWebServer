@@ -68,7 +68,7 @@ def webServer(port=13331):
       # Remember the format you used in the try: block!
       #Fill in start
       badResponse = (
-        b"HTTP/1.1 200 OK\r\n"
+        b"HTTP/1.1 404 Not Found\r\n"
         b"Content-Type: text/plain\r\n"
         b":invalid-pseudo-header: some value\r\n"  # Invalid in standard HTTP/1.1
         b"another invalid line without a colon\r\n"  # Invalid format
