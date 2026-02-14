@@ -33,8 +33,8 @@ def webServer(port=13331):
       header = (
               b"HTTP/1.1 200 OK\r\n"
               b"Content-Type: text/html; charset=UTF-8\r\n"
-              b"Content-Length: " + str(len(f)).encode("utf-8") +
-              b"\r\n"
+              b"Server: 127.0.0.1\r\n"
+              b"Content-Length: " + str(len(f)).encode("utf-8") + b"\r\n"
               b"\r\n"  # blank line = end of headers
 
       )
