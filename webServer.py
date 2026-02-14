@@ -12,7 +12,6 @@ def webServer(port=13331):
   serverSocket.bind(("", port))
   #Fill in start
   serverSocket.listen(1)
-  print(F"The server is ready to receive on port {port}")
   #Fill in end
 
   while True:
@@ -23,9 +22,7 @@ def webServer(port=13331):
     print(f"Connected by {addr}")
     try:
       message = connectionSocket.recv(1024).decode('utf-8')
-      #print(f"Received/n  {message}")
       filename = message.split()[1]
-      #print(F"split message: {filename}")
       #opens the client requested file.
       #Plenty of guidance online on how to open and read a file in python. How should you read it though if you plan on sending it through a socket?
       f = open(filename[1:],'rb',).read() #fill in start              #fill in end   )
@@ -35,12 +32,18 @@ def webServer(port=13331):
 
       #This variable can store the headers you want to send for any valid or invalid request.   What header should be sent for a response that is ok?
 
-      #Fill in start 
-      header = b"HTTP/1.1 200 OK\r\n" +  str(
-        len(filename)).encode() + b"\r\n\r\n"
-      #Content-Type is an example on how to send a header as bytes. There are more!
-      outputdata = b"Content-Type: text/html; charset=UTF-8\r\n"
 
+      header = (
+              b"HTTP/1.1 200 OK\r\n"
+              b"Content-Type: text/html; charset=UTF-8\r\n"
+              b"Content-Length: " + str(len(f)).encode() +
+              b"\r\n"
+              b"\r\n"  # blank line = end of headers
+      )
+
+      appended = header + f
+
+      connectionSocket.sendall(appended)
 
       #Note that a complete header must end with a blank line, creating the four-byte sequence "\r\n\r\n" Refer to https://w3.cs.jmu.edu/kirkpams/OpenCSF/Books/csf/html/TCPSockets.html
  
@@ -50,7 +53,7 @@ def webServer(port=13331):
 
       # #for line in file
       #Fill in start - append your html file contents #Fill in end 
-      appended = header + f
+    
       #Send the content of the requested file to the client (don't forget the headers you created)!
 
       #Send everything as one send command, do not send one line/item at a time!
