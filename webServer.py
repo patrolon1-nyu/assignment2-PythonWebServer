@@ -53,7 +53,7 @@ def webServer(port=13331):
 
       # #for line in file
       #Fill in start - append your html file contents #Fill in end 
-    
+
       #Send the content of the requested file to the client (don't forget the headers you created)!
 
       #Send everything as one send command, do not send one line/item at a time!
@@ -72,6 +72,7 @@ def webServer(port=13331):
       badResponse = (
         b"HTTP/1.1 404 Not Found\r\n"
         b"Content-Type: text/plain\r\n"
+        b"Content-Length: " + str(len(f)).encode()+
         b"\r\n\r\n"
       )
       connectionSocket.sendall(badResponse)
